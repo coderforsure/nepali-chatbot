@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #ACB6E5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            background: white;
+            width: 400px;
+            max-width: 90%;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            height: 400px;
+        }
+        .chat-box p {
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+            width: fit-content;
+            max-width: 80%;
+        }
+        .user-msg {
+            background-color: #DCF8C6;
+            align-self: flex-end;
+        }
+        .bot-msg {
+            background-color: #F1F0F0;
+            align-self: flex-start;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+        .chat-input button {
+            padding: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        AI Chatbot Project
+    </div>
+    <div class="chat-box" id="chat-box">
+        <p class="bot-msg">Hello! I am your AI Chatbot. Ask me anything!</p>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+
+    function sendMessage() {
+        const msg = userInput.value.trim();
+        if(msg === "") return;
+
+        // Add user message
+        const userMsg = document.createElement('p');
+        userMsg.classList.add('user-msg');
+        userMsg.textContent = msg;
+        chatBox.appendChild(userMsg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        userInput.value = "";
+
+        // Generate bot response
+        setTimeout(() => {
+            const botMsg = document.createElement('p');
+            botMsg.classList.add('bot-msg');
+            botMsg.textContent = generateBotResponse(msg);
+            chatBox.appendChild(botMsg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 500);
+    }
+
+    function generateBotResponse(input) {
+        // Simple simulated AI responses
+        input = input.toLowerCase();
+        if(input.includes("hello") || input.includes("hi")) {
+            return "Hi there! How can I help you today?";
+        } else if(input.includes("how are you")) {
+            return "I'm just a chatbot, but I'm doing great!";
+        } else if(input.includes("your name")) {
+            return "I am your AI Chatbot project assistant.";
+        } else if(input.includes("who created you")) {
+            return "I was created by a 4th-sem BCA student for a project!";
+        } else if(input.includes("thank")) {
+            return "You're welcome!";
+        } else {
+            return "Sorry, I don't understand that. Can you ask something else?";
+        }
+    }
+
+    // Send message on Enter key
+    userInput.addEventListener("keypress", function(e) {
+        if(e.key === "Enter") sendMessage();
+    });
+</script>
+
+</body>
+</html>
